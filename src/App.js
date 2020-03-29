@@ -45,6 +45,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      change: [],
+      count: 0,
       obj: {
         height: "", weight: "", BMI: ""
       }
@@ -54,35 +56,45 @@ export default class App extends React.Component {
   }
   handleOnchangeWeight = (e) => {
     this.setState({
-      obj: { weight: e.target.value, height: this.state.obj.height, BMI: this.state.obj.BMI }
+      obj: { weight: e.target.value, height: this.state.obj.height, BMI: "" }
     })
   }
   handleOnchangeHeight = (e) => {
     this.setState({
       obj: {
-        height: e.target.value, weight: this.state.obj.weight, BMI: this.state.obj.BMI
+        height: e.target.value, weight: this.state.obj.weight, BMI: ""
       }
 
     })
   }
   handleSubmit = () => {
     this.setState({
-      obj: { BMI: Math.round((this.state.obj.weight) / ((this.state.obj.height) / 100)), weight: this.state.obj.weight, height: this.state.obj.height }
+
+      count: this.state.count + 1,
+      obj: {
+        BMI: Math.round((this.state.obj.weight) / ((this.state.obj.height) / 100)),
+        weight: this.state.obj.weight, height: this.state.obj.height
+      }
 
     })
-    console.log(this.state.obj.height);
+
+    var Arr = this.state.obj, _Arr = this.state.change;;
+
+   var  element = <div className="col-md-6 col-sm-12" key={Math.random()}>
+      <SimpleCard BMI={Object.entries(Arr)["BMI"]} weight={Object.entries(Arr)["weight"]} height={Object.entries(Arr)["height"]} key={Math.random()} />
+    </div>
+    if (this.state.count > 0) {
+      _Arr.push(element);
+      this.setState({
+        change: _Arr
+
+      })
+
+    }
+     console.log(this.state.change)
+
   }
-  BMIListing = () => {
-    const Arr = this.state.obj
-    const SimpleCard=SimpleCard(Arr);
-    return (<div className="col md-6 col-sm-12">{Arr.map((height, weight, BMI )=>
 
-      <SimpleCard height={height} weight={weight} BMI={BMI} />
-
-    )}
-
-    </div>);
-  }
   render() {
     return (
       <div className="App">
@@ -103,16 +115,16 @@ export default class App extends React.Component {
             </div>
           </div>
         </form>
-
         <div className="d-flex align-items-center justify-content-center m-4">
           <div className="data-container row">
-            this is how it will go
-              {this.BMIListing}
-            
+
+          {this.state.change.map(comp => (comp))}
 
           </div>
 
+
         </div>
+
 
 
 
