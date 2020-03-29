@@ -78,12 +78,12 @@ export default class App extends React.Component {
 
     })
 
-    var Arr = this.state.obj, _Arr = this.state.change;;
-
-   var  element = <div className="col-md-6 col-sm-12" key={Math.random()}>
-      <SimpleCard BMI={Object.entries(Arr)["BMI"]} weight={Object.entries(Arr)["weight"]} height={Object.entries(Arr)["height"]} key={Math.random()} />
-    </div>
+    var Arr = this.state.obj, _Arr = this.state.change;
     if (this.state.count > 0) {
+    
+    var element = <div className="col-md-6 col-sm-12" key={Math.random()}>
+      <SimpleCard BMI={this.state.obj.BMI} weight={this.state.obj.weight} height={this.state.obj.height} key={Math.random()} />
+    </div>
       _Arr.push(element);
       this.setState({
         change: _Arr
@@ -91,7 +91,7 @@ export default class App extends React.Component {
       })
 
     }
-     console.log(this.state.change)
+    console.log(this.state.change)
 
   }
 
@@ -118,7 +118,7 @@ export default class App extends React.Component {
         <div className="d-flex align-items-center justify-content-center m-4">
           <div className="data-container row">
 
-          {this.state.change.map(comp => (comp))}
+            {this.state.change.map(comp => (comp))}
 
           </div>
 
